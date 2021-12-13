@@ -1,48 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { request } from "./server";
-import { TaskList } from './components/TaskList';
-import { TaskForm } from './components/TaskForm';
+import { TaskList } from "./components/TaskList";
+import { TaskForm } from "./components/TaskForm";
 
-// TODOタスクの型
-export type Task = {
-  label: string;
-  isDone: boolean
-}
+export type Task = { label: string; isDone: boolean };
 
 const App: React.VFC = () => {
   // タスクリストを格納する
   const [tasks, setTasks] = useState<Task[]>([]);
   // 追加前のタスクを格納する
-  const [newTaskLabel, setNewTaskLabel] = useState<string>('');
+  const [newTaskLabel, setNewTaskLabel] = useState<string>("");
+
   // ページマウント時にモックAPIからデータを取得
   useEffect(() => {
-    request.fetchTasks((payload: Task[]) => {
-      setTasks(payload);
-    });
+    request.fetchTasks((payload: Task[]) => setTasks(payload));
   }, []);
 
-  const check = () => {
-    console.log(tasks)
-  }
-  
   return (
-    <div>
+    <div style={{ width: "700px", margin: "0 auto" }}>
       {/* ヘッダー */}
-      <h1 style={{ color: 'red' }}>Tutorial Works</h1>
-      <p>This is Cyber Agent Handson!!</p>
+      <h1>Tutorial Works</h1>
+      <h2>React Todo List</h2>
 
       {/* 一覧表示 */}
       {/* TODO: ここはFragmentを省略している */}
-      <TaskList {...{ tasks, setTasks}} />
+      <TaskList {...{ tasks, setTasks }} />
 
       {/* タスク追加、削除 */}
       <TaskForm {...{ tasks, setTasks, newTaskLabel, setNewTaskLabel }} />
-      <button 
-        onClick={check}
-      >
-        check
-        </button>
     </div>
   );
 };
