@@ -8,8 +8,8 @@ createServer({
   },
 
   seeds(server: any) {
-    server.create('task', { label: '食器洗い', isDone: false });
-    server.create('task', { label: '洗濯', isDone: false });
+    server.create('task', { label: '食器洗い', isDone: false, atChanged: new Date() });
+    server.create('task', { label: '洗濯', isDone: false, atChanged: new Date() });
   },
 
   routes() {
@@ -19,11 +19,13 @@ createServer({
     this.get('/tasks', (schema: any) => {
       return schema.tasks.all();
     });
+    
     // 作成
     this.post('/tasks', (schema: any, request) => {
       let attrs = JSON.parse(request.requestBody);
       return schema.tasks.post(attrs);
     });
+    
     /// 削除
     this.delete('/tasks/:id', (schema: any, request) => {
       let id = request.params.id;

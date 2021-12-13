@@ -17,7 +17,7 @@ export const TaskList: React.FC<Props> = ({ tasks, setTasks }) => {
     i: number
   ) => {
     const newTasks = tasks.map((task, _i) => {
-      return _i === i ? { ...task, isDone: e.target.checked } : task;
+      return _i === i ? { ...task, isDone: e.target.checked, atChanged: new Date() } : task;
     });
     setTasks(newTasks);
   };

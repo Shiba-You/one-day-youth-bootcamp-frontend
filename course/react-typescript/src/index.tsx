@@ -3,8 +3,9 @@ import ReactDOM from "react-dom";
 import { request } from "./server";
 import { TaskList } from "./components/TaskList";
 import { TaskForm } from "./components/TaskForm";
+import { TaskTable } from "./components/TaskTable";
 
-export type Task = { label: string; isDone: boolean };
+export type Task = { label: string; isDone: boolean, atChanged: Date };
 
 const App: React.VFC = () => {
   // タスクリストを格納する
@@ -29,6 +30,8 @@ const App: React.VFC = () => {
 
       {/* タスク追加、削除 */}
       <TaskForm {...{ tasks, setTasks, newTaskLabel, setNewTaskLabel }} />
+
+      <TaskTable {...{ tasks, setTasks }} />
     </div>
   );
 };
