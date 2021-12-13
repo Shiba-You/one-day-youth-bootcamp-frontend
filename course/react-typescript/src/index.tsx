@@ -3,9 +3,8 @@ import ReactDOM from "react-dom";
 import { request } from "./server";
 import { TaskList } from "./components/TaskList";
 import { TaskForm } from "./components/TaskForm";
-import { TaskTable } from "./components/TaskTable";
 
-export type Task = { label: string; isDone: boolean, atChanged: Date };
+export type Task = { label: string; isDone: boolean, atChanged: string };
 
 const App: React.VFC = () => {
   // タスクリストを格納する
@@ -15,7 +14,7 @@ const App: React.VFC = () => {
 
   // ページマウント時にモックAPIからデータを取得
   useEffect(() => {
-    request.fetchTasks((payload: Task[]) => setTasks(payload));
+    request.fetchTasks((payload: Task[]) => {setTasks(payload)})
   }, []);
 
   return (
@@ -30,8 +29,6 @@ const App: React.VFC = () => {
 
       {/* タスク追加、削除 */}
       <TaskForm {...{ tasks, setTasks, newTaskLabel, setNewTaskLabel }} />
-
-      <TaskTable {...{ tasks, setTasks }} />
     </div>
   );
 };

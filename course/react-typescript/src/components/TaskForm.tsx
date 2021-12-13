@@ -1,5 +1,6 @@
 import React from "react";
 import { Task } from "../";
+import { timeArrange } from "../utils/index";
 
 type Props = {
   tasks: Task[];
@@ -20,9 +21,8 @@ export const TaskForm: React.FC<Props> = ({
 
   // Taskの登録
   const handleAddTask = () => {
-    const newTask = { label: newTaskLabel, isDone: false, atChanged: new Date() };
+    const newTask = { label: newTaskLabel, isDone: false, atChanged: timeArrange(new Date()) };
     setTasks([...tasks, newTask]);
-    console.log(tasks)
     setNewTaskLabel("");
   };
 

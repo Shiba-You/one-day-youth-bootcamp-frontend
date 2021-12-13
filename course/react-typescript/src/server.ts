@@ -1,5 +1,6 @@
 import { createServer, Model } from "miragejs";
 import { Task } from "./";
+import { timeArrange } from "./utils/index";
 
 // mock API
 createServer({
@@ -8,8 +9,8 @@ createServer({
   },
 
   seeds(server: any) {
-    server.create('task', { label: '食器洗い', isDone: false, atChanged: new Date() });
-    server.create('task', { label: '洗濯', isDone: false, atChanged: new Date() });
+    server.create('task', { label: '食器洗い', isDone: false, atChanged: timeArrange(new Date()) });
+    server.create('task', { label: '洗濯', isDone: false, atChanged: timeArrange(new Date()) });
   },
 
   routes() {

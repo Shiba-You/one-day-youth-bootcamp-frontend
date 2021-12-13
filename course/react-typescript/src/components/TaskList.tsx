@@ -2,6 +2,8 @@
    
 import React from "react";
 import { Task } from "../";
+import { TaskTable } from "./TaskTable";
+import { timeArrange } from "../utils/index";
 
 type Props = {
   tasks: Task[];
@@ -17,24 +19,27 @@ export const TaskList: React.FC<Props> = ({ tasks, setTasks }) => {
     i: number
   ) => {
     const newTasks = tasks.map((task, _i) => {
-      return _i === i ? { ...task, isDone: e.target.checked, atChanged: new Date() } : task;
+      return _i === i ? { ...task, isDone: e.target.checked, atChanged: timeArrange(new Date()) } : task;
     });
     setTasks(newTasks);
   };
 
   return (
-    <ul>
-      {tasks.map((task, index) => (
-        // TODO: ここで todo-${index} で key を文字列にしているのは，再レンダリングされる時に被らないようにするため？
-        <li key={`todo-${index}`}>
-          {task.isDone ? <s>{task.label}</s> : task.label}
-          <input
-            onChange={(e) => handleCheckBox(e, index)}
-            type="checkbox"
-            checked={task.isDone}
-          />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul>
+        {tasks.map((task, index) => (
+          // TODO: ここで todo-${index} で key を文字列にしているのは，再レンダリングされる時に被らないようにするため？
+          <li key={`todo-${index}`}>
+            {task.isDone ? <s>{task.label}</s> : task.label}
+            <input
+              onChange={(e) => handleCheckBox(e, index)}
+              type="checkbox"
+              checked={task.isDone}
+            />
+          </li>
+        ))}
+      </ul>
+      <TaskTable {...{ tasks }} />
+    </>
   );
 };
